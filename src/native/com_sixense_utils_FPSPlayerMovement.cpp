@@ -49,7 +49,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSPlayerMovement_getWalkDi
 JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_setParameter(JNIEnv *env, jobject self, jobject enumObj, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
-    sixenseUtils::FPSPlayerMovement::fps_movement_params param = NULL;
+    sixenseUtils::FPSPlayerMovement::fps_movement_params param;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMovementParam");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
@@ -78,9 +78,9 @@ JNIEXPORT jfloat JNICALL Java_com_sixense_utils_FPSPlayerMovement_getParameter(J
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
     sixenseUtils::FPSPlayerMovement::fps_movement_params param;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMovementParam");
-    if(enumClass == NULL) return;
+    if(enumClass == NULL) return 0.0;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
-    if(getNameMethod == NULL) return;
+    if(getNameMethod == NULL) return 0.0;
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "DEAD_ZONE_PERCENT") == 0) {
