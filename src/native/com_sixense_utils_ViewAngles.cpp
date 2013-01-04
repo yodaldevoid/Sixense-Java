@@ -57,29 +57,22 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ViewAngles_getMode(JNIEnv *env,
     jmethodID cid = env->GetMethodID(enumClass, "<init>", "(Ljava/lang/String;I)V");
     if(cid == NULL) return NULL;
     sixenseUtils::FPSViewAngles::fps_mode mode = vAngles->getMode();
-    jstring enumStr;
-    jint i;
+    jstring enumStr = NULL;
+    jint i = -1;
     if(mode == sixenseUtils::FPSViewAngles::MOUSELOOK) {
         enumStr = env->NewStringUTF("MOUSELOOK");
-        if(enumStr == NULL) return NULL;
         i = 0;
     } else if(mode == sixenseUtils::FPSViewAngles::FREE_AIM_TWO_CONTROLLER) {
         enumStr = env->NewStringUTF("FREE_AIM_TWO_CONTROLLER");
-        if(enumStr == NULL) return NULL;
         i = 1;
     } else if(mode == sixenseUtils::FPSViewAngles::FREE_AIM_ONE_CONTROLLER) {
         enumStr = env->NewStringUTF("FREE_AIM_ONE_CONTROLLER");
-        if(enumStr == NULL) return NULL;
         i = 2;
     } else if(mode == sixenseUtils::FPSViewAngles::DUAL_ANALOG) {
         enumStr = env->NewStringUTF("DUAL_ANALOG");
-        if(enumStr == NULL) return NULL;
         i = 3;
-    } else {
-        enumStr = env->NewStringUTF("MOUSELOOK");
-        if(enumStr == NULL) return NULL;
-        i = 0;
     }
+	if(enumStr == NULL) return NULL;
     jobject result = env->NewObject(enumClass, cid, enumStr, i);
     env->DeleteLocalRef(enumClass);
     env->DeleteLocalRef(enumStr);
@@ -140,10 +133,8 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceViewAngles(JNIEnv 
         mode = sixenseUtils::FPSViewAngles::FREE_AIM_TWO_CONTROLLER;
     } else if(strcmp(valueNative, "FREE_AIM_ONE_CONTROLLER") == 0) {
         mode = sixenseUtils::FPSViewAngles::FREE_AIM_ONE_CONTROLLER;
-    } else if(strcmp(valueNative, "DUAL_ANALOG") == 0) {
-        mode = sixenseUtils::FPSViewAngles::DUAL_ANALOG;
     } else {
-        mode = sixenseUtils::FPSViewAngles::MOUSELOOK;
+        mode = sixenseUtils::FPSViewAngles::DUAL_ANALOG;
     }
     Vector3 vec = Vector3(flo1, flo2, flo3);
     vAngles->forceViewAngles(mode, vec);

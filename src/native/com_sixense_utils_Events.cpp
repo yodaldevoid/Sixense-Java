@@ -114,10 +114,8 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setBinding(JNIEnv *env, job
     valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "LEFT") == 0) {
         controllerParam = sixenseUtils::FPSEvents::CONTROLLER_LEFT;
-    } else if(strcmp(valueNative, "RIGHT") == 0) {
-        controllerParam = sixenseUtils::FPSEvents::CONTROLLER_RIGHT;
     } else {
-        controllerParam = sixenseUtils::FPSEvents::CONTROLLER_LEFT;
+        controllerParam = sixenseUtils::FPSEvents::CONTROLLER_RIGHT;
     }
 
 	enumClass = NULL;
@@ -129,9 +127,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setBinding(JNIEnv *env, job
     if(getNameMethod == NULL) return;
     value = (jstring) env->CallObjectMethod(actionRef, getNameMethod);
     valueNative = env->GetStringUTFChars(value, JNI_FALSE);
-    if(strcmp(valueNative, "BUTTON_PRESS") == 0) {
-        actionParam = sixenseUtils::FPSEvents::ACTION_BUTTON_PRESS;
-    } else if(strcmp(valueNative, "JOYSTICK_MOVE") == 0) {
+    if(strcmp(valueNative, "JOYSTICK_MOVE") == 0) {
         actionParam = sixenseUtils::FPSEvents::ACTION_JOYSTICK_MOVE;
     } else if(strcmp(valueNative, "TRIGGER_PRESS") == 0) {
         actionParam = sixenseUtils::FPSEvents::ACTION_TRIGGER_PRESS;
@@ -241,8 +237,6 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_Events_eventActive(JNIEnv *env
         eventParam = sixenseUtils::FPSEvents::EQUIP_PISTOL;
     } else if(strcmp(valueNative, "RATCHET") == 0) {
         eventParam = sixenseUtils::FPSEvents::RATCHET;
-    } else if(strcmp(valueNative, "LAST_EVENT") == 0) {
-        eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     } else {
         eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     }
@@ -321,8 +315,6 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_Events_eventStarted(JNIEnv *en
         eventParam = sixenseUtils::FPSEvents::EQUIP_PISTOL;
     } else if(strcmp(valueNative, "RATCHET") == 0) {
         eventParam = sixenseUtils::FPSEvents::RATCHET;
-    } else if(strcmp(valueNative, "LAST_EVENT") == 0) {
-        eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     } else {
         eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     }
@@ -401,8 +393,6 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_Events_eventStopped(JNIEnv *en
         eventParam = sixenseUtils::FPSEvents::EQUIP_PISTOL;
     } else if(strcmp(valueNative, "RATCHET") == 0) {
         eventParam = sixenseUtils::FPSEvents::RATCHET;
-    } else if(strcmp(valueNative, "LAST_EVENT") == 0) {
-        eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     } else {
         eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     }

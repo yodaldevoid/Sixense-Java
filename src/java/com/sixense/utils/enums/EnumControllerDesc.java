@@ -12,5 +12,5 @@ public enum EnumControllerDesc {
     P3R,
     P4L,
     P4R,
-    LAST_CONTROLLER_DESC
+    LAST_DESC
 }

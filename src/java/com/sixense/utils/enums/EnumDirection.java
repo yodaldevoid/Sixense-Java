@@ -9,7 +9,7 @@ public enum EnumDirection {
     LEFT,
     RIGHT,
     CW,
-    CCW
-//  FORWARD,
-//  BACKWARD
+    CCW,
+    FORWARD,
+    BACKWARD
 }

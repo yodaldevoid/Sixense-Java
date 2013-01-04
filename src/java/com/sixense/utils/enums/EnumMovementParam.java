@@ -10,5 +10,5 @@ public enum EnumMovementParam {
 
     LEFT_HANDED,
 
-    LAST_FPS_MOVEMENT_PARAM;
+    LAST_PARAM;
 }

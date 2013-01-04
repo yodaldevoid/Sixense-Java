@@ -64,10 +64,8 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_PlayerMovement_setParameter(JNIEnv
         param = sixenseUtils::FPSPlayerMovement::USE_RIGHT_HAND;
     } else if(strcmp(valueNative, "LEFT_HANDED") == 0) {
         param = sixenseUtils::FPSPlayerMovement::LEFT_HANDED;
-    } else if(strcmp(valueNative, "LAST_FPS_MOVEMENT_PARAM") == 0) {
-        param = sixenseUtils::FPSPlayerMovement::LAST_FPS_MOVEMENT_PARAM;
     } else {
-        param = sixenseUtils::FPSPlayerMovement::DEAD_ZONE_PERCENT;
+        param = sixenseUtils::FPSPlayerMovement::LAST_FPS_MOVEMENT_PARAM;
     }
     pMovement->setParameter(param, flo);
     return;
@@ -91,10 +89,8 @@ JNIEXPORT jfloat JNICALL Java_com_sixense_utils_PlayerMovement_getParameter(JNIE
         param = sixenseUtils::FPSPlayerMovement::USE_RIGHT_HAND;
     } else if(strcmp(valueNative, "LEFT_HANDED") == 0) {
         param = sixenseUtils::FPSPlayerMovement::LEFT_HANDED;
-    } else if(strcmp(valueNative, "LAST_FPS_MOVEMENT_PARAM") == 0) {
-        param = sixenseUtils::FPSPlayerMovement::LAST_FPS_MOVEMENT_PARAM;
     } else {
-        param = sixenseUtils::FPSPlayerMovement::DEAD_ZONE_PERCENT;
+        param = sixenseUtils::FPSPlayerMovement::LAST_FPS_MOVEMENT_PARAM;
     }
     return pMovement->getParameter(param);
 }
