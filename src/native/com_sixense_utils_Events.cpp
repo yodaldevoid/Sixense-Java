@@ -103,13 +103,15 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setBinding(JNIEnv *env, job
         eventParam = sixenseUtils::FPSEvents::LAST_FPS_EVENT;
     }
 
+	enumClass = NULL;
+	getNameMethod = NULL;
 	sixenseUtils::FPSEvents::fps_controller controllerParam;
-    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumController");
+    enumClass = env->FindClass("com/sixense/utils/enums/EnumController");
     if(enumClass == NULL) return;
-    jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
+    getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return;
-    jstring value = (jstring) env->CallObjectMethod(controllerRef, getNameMethod);
-    const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
+    value = (jstring) env->CallObjectMethod(controllerRef, getNameMethod);
+    valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "LEFT") == 0) {
         controllerParam = sixenseUtils::FPSEvents::CONTROLLER_LEFT;
     } else if(strcmp(valueNative, "RIGHT") == 0) {
@@ -118,13 +120,15 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setBinding(JNIEnv *env, job
         controllerParam = sixenseUtils::FPSEvents::CONTROLLER_LEFT;
     }
 
+	enumClass = NULL;
+	getNameMethod = NULL;
 	sixenseUtils::FPSEvents::fps_action actionParam;
-	jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumActionType");
+	enumClass = env->FindClass("com/sixense/utils/enums/EnumActionType");
     if(enumClass == NULL) return;
-    jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
+    getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return;
-    jstring value = (jstring) env->CallObjectMethod(actionRef, getNameMethod);
-    const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
+    value = (jstring) env->CallObjectMethod(actionRef, getNameMethod);
+    valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "BUTTON_PRESS") == 0) {
         actionParam = sixenseUtils::FPSEvents::ACTION_BUTTON_PRESS;
     } else if(strcmp(valueNative, "JOYSTICK_MOVE") == 0) {
@@ -172,9 +176,9 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_Events_eventActive(JNIEnv *env
 
 	sixenseUtils::FPSEvents::fps_event eventParam;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumEvent");
-    if(enumClass == NULL) return;
+    if(enumClass == NULL) return JNI_FALSE;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
-    if(getNameMethod == NULL) return;
+    if(getNameMethod == NULL) return JNI_FALSE;
     jstring value = (jstring) env->CallObjectMethod(eventRef, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "WALK_LEFT") == 0) {
@@ -252,9 +256,9 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_Events_eventStarted(JNIEnv *en
 
 	sixenseUtils::FPSEvents::fps_event eventParam;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumEvent");
-    if(enumClass == NULL) return;
+    if(enumClass == NULL) return JNI_FALSE;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
-    if(getNameMethod == NULL) return;
+    if(getNameMethod == NULL) return JNI_FALSE;
     jstring value = (jstring) env->CallObjectMethod(eventRef, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "WALK_LEFT") == 0) {
@@ -332,9 +336,9 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_Events_eventStopped(JNIEnv *en
 
 	sixenseUtils::FPSEvents::fps_event eventParam;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumEvent");
-    if(enumClass == NULL) return;
+    if(enumClass == NULL) return JNI_FALSE;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
-    if(getNameMethod == NULL) return;
+    if(getNameMethod == NULL) return JNI_FALSE;
     jstring value = (jstring) env->CallObjectMethod(eventRef, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "WALK_LEFT") == 0) {
@@ -412,7 +416,8 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_Events_getGrenadeThrowVeloc
 
 	sixenseMath::Vector3 vel = events->getGrenadeThrowVelocity();
 	jfloatArray arr = env->NewFloatArray(3);
-	env->SetFloatArrayRegion(arr, 0, 3, vec._vec);
+	jfloat vec[3] = {vel[0], vel[1], vel[2]};
+	env->SetFloatArrayRegion(arr, 0, 3, vec);
 	return arr;
 }
 
@@ -425,7 +430,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setParameter(JNIEnv *env, j
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return;
-    jstring value = (jstring) env->CallObjectMethod(actionRef, getNameMethod);
+    jstring value = (jstring) env->CallObjectMethod(paramRef, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "MELEE_SENSITIVITY") == 0) {
         param = sixenseUtils::FPSEvents::MELEE_SENSITIVITY;
@@ -469,10 +474,10 @@ JNIEXPORT jfloat JNICALL Java_com_sixense_utils_Events_getParameter(JNIEnv *env,
 
 	sixenseUtils::FPSEvents::fps_params param;
 	jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumEventParam");
-    if(enumClass == NULL) return;
+    if(enumClass == NULL) return JNI_FALSE;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
-    if(getNameMethod == NULL) return;
-    jstring value = (jstring) env->CallObjectMethod(actionRef, getNameMethod);
+    if(getNameMethod == NULL) return JNI_FALSE;
+    jstring value = (jstring) env->CallObjectMethod(paramRef, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "MELEE_SENSITIVITY") == 0) {
         param = sixenseUtils::FPSEvents::MELEE_SENSITIVITY;
@@ -506,5 +511,5 @@ JNIEXPORT jfloat JNICALL Java_com_sixense_utils_Events_getParameter(JNIEnv *env,
         param = sixenseUtils::FPSEvents::LAST_FPS_EVENTS_PARAM;
     }
 
-	return events->getParameter(param, val);
+	return events->getParameter(param);
 }
