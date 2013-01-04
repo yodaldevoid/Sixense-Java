@@ -3,7 +3,7 @@ package com.sixense.utils.enums;
 /**
  * @author Yoda12999
  */
-public enum EnumFPSParams {
+public enum EnumViewParam {
     CONTROLLER_ANGLE_MODE,
 
     AIM_1TO1_HEADING_MULTIPLIER,
@@ -44,5 +44,5 @@ public enum EnumFPSParams {
 
     LEFT_HANDED,
 
-    LAST_FPS_VIEW_ANGLES_PARAM
+    LAST_PARAM
 }

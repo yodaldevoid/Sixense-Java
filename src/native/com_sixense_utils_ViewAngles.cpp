@@ -1,13 +1,13 @@
 #include "sixense_java_utils.h"
 #include "fps.hpp"
-#include "com_sixense_utils_FPSViewAngles.h"
+#include "com_sixense_utils_ViewAngles.h"
 
-JNIEXPORT jlong JNICALL Java_com_sixense_utils_FPSViewAngles_create(JNIEnv *, jobject) {
+JNIEXPORT jlong JNICALL Java_com_sixense_utils_ViewAngles_create(JNIEnv *, jobject) {
     sixenseUtils::FPSViewAngles * vAngles = new sixenseUtils::FPSViewAngles();
     return (jlong) vAngles;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_destroy(JNIEnv *env, jobject self) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_destroy(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     jlong peer = env->GetLongField(self, fid);
     if(peer == 0) {
@@ -17,7 +17,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_destroy(JNIEnv *env,
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setGame(JNIEnv *env, jobject self, jstring str) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setGame(JNIEnv *env, jobject self, jstring str) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     const char * nstr = env->GetStringUTFChars(str, NULL);
@@ -28,10 +28,10 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setGame(JNIEnv *env,
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setMode(JNIEnv *env, jobject self, jobject enumObj) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setMode(JNIEnv *env, jobject self, jobject enumObj) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
-    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumFPSMode");
+    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMode");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return;
@@ -49,10 +49,10 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setMode(JNIEnv *env,
     return;
 }
 
-JNIEXPORT jobject JNICALL Java_com_sixense_utils_FPSViewAngles_getMode(JNIEnv *env, jobject self) {
+JNIEXPORT jobject JNICALL Java_com_sixense_utils_ViewAngles_getMode(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
-    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumFPSMode");
+    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMode");
     if(enumClass == NULL) return NULL;
     jmethodID cid = env->GetMethodID(enumClass, "<init>", "(Ljava/lang/String;I)V");
     if(cid == NULL) return NULL;
@@ -86,7 +86,7 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_FPSViewAngles_getMode(JNIEnv *e
     return result;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_FPSViewAngles_update(JNIEnv *env, jobject self, jobject leftRef, jobject rightRef, jfloat frametime) {
+JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ViewAngles_update(JNIEnv *env, jobject self, jobject leftRef, jobject rightRef, jfloat frametime) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     sixenseControllerData * leftData = getControllerData(env, leftRef);
@@ -94,7 +94,7 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_FPSViewAngles_update(JNIEnv *e
     return vAngles->update(leftData, rightData, frametime) == SIXENSE_SUCCESS ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getViewAngles(JNIEnv *env, jobject self) {
+JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getViewAngles(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getViewAngles();
@@ -104,7 +104,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getViewAngles
     return arr;
 }
 
-JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getViewAngleOffset(JNIEnv *env, jobject self) {
+JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getViewAngleOffset(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getViewAngleOffset();
@@ -114,7 +114,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getViewAngleO
     return arr;
 }
 
-JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getSpinSpeed(JNIEnv *env, jobject self) {
+JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getSpinSpeed(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getSpinSpeed();
@@ -124,11 +124,11 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getSpinSpeed(
     return arr;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_forceViewAngles(JNIEnv *env, jobject self, jobject enumObj, jfloat flo1, jfloat flo2, jfloat flo3) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceViewAngles(JNIEnv *env, jobject self, jobject enumObj, jfloat flo1, jfloat flo2, jfloat flo3) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     sixenseUtils::FPSViewAngles::fps_mode mode;
-    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumFPSMode");
+    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMode");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return;
@@ -149,14 +149,14 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_forceViewAngles(JNIE
     vAngles->forceViewAngles(mode, vec);
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setFeetAnglesMetroid(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2, jfloat flo3) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setFeetAnglesMetroid(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2, jfloat flo3) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = Vector3(flo1, flo2, flo3);
     vAngles->setFeetAnglesMetroid(vec);
 }
 
-JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getFeetAnglesMetroid(JNIEnv *env, jobject self) {
+JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFeetAnglesMetroid(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getFeetAnglesMetroid();
@@ -166,11 +166,11 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getFeetAngles
     return arr;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setParameter(JNIEnv *env, jobject self, jobject enumObj, jfloat flo) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setParameter(JNIEnv *env, jobject self, jobject enumObj, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     sixenseUtils::FPSViewAngles::fps_params param;
-    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumFPSParams");
+    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumViewParam");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return;
@@ -234,20 +234,18 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setParameter(JNIEnv 
         param = sixenseUtils::FPSViewAngles::EXIT_METROID_BLEND;
     } else if(strcmp(valueNative, "LEFT_HANDED") == 0) {
         param = sixenseUtils::FPSViewAngles::LEFT_HANDED;
-    } else if(strcmp(valueNative, "LAST_FPS_VIEW_ANGLES_PARAM") == 0) {
-        param = sixenseUtils::FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
     } else {
-		param = sixenseUtils::FPSViewAngles::CONTROLLER_ANGLE_MODE;
-	}
+        param = sixenseUtils::FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
+    }
     vAngles->setParameter(param, flo);
     return;
 }
 
-JNIEXPORT jfloat JNICALL Java_com_sixense_utils_FPSViewAngles_getParameter(JNIEnv *env, jobject self, jobject enumObj) {
+JNIEXPORT jfloat JNICALL Java_com_sixense_utils_ViewAngles_getParameter(JNIEnv *env, jobject self, jobject enumObj) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     sixenseUtils::FPSViewAngles::fps_params param;
-    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumFPSParams");
+    jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumViewParams");
     if(enumClass == NULL) return 0;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
     if(getNameMethod == NULL) return 0;
@@ -311,21 +309,19 @@ JNIEXPORT jfloat JNICALL Java_com_sixense_utils_FPSViewAngles_getParameter(JNIEn
         param = sixenseUtils::FPSViewAngles::EXIT_METROID_BLEND;
     } else if(strcmp(valueNative, "LEFT_HANDED") == 0) {
         param = sixenseUtils::FPSViewAngles::LEFT_HANDED;
-    } else if(strcmp(valueNative, "LAST_FPS_VIEW_ANGLES_PARAM") == 0) {
-        param = sixenseUtils::FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
     } else {
-		param = sixenseUtils::FPSViewAngles::CONTROLLER_ANGLE_MODE;
-	}
+        param = sixenseUtils::FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
+    }
     return vAngles->getParameter(param);
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setFov(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setFov(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->setFov(flo1, flo2);
 }
 
-JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getFov(JNIEnv *env, jobject self) {
+JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFov(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     float *h = 0, *v = 0;
@@ -336,34 +332,34 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSViewAngles_getFov(JNIEnv
     return arr;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setHoldingTurnSpeed(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setHoldingTurnSpeed(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->setHoldingTurnSpeed(flo1, flo2);
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_setRatcheting(JNIEnv *env, jobject self, jboolean b) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setRatcheting(JNIEnv *env, jobject self, jboolean b) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->setRatcheting(b == JNI_TRUE);
     return;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_FPSViewAngles_isRatcheting(JNIEnv *env, jobject self) {
+JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ViewAngles_isRatcheting(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     return vAngles->isRatcheting() ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_reset(JNIEnv *env, jobject self) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_reset(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->reset();
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSViewAngles_forceMetroidBlend(JNIEnv *env, jobject self, jfloat flo) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceMetroidBlend(JNIEnv *env, jobject self, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->forceMetroidBlend(flo);

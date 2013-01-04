@@ -6,10 +6,10 @@ import com.sixense.utils.enums.*;
 /**
  * @author Yoda12999
  */
-public class FPSViewAngles {
+public class ViewAngles {
     private long peer;
     
-    public FPSViewAngles()  {
+    public ViewAngles()  {
         peer = create();
     }
     
@@ -25,9 +25,9 @@ public class FPSViewAngles {
 
     public native void setGame(String gameName);
 
-    public native void setMode(EnumFPSMode mode);
+    public native void setMode(EnumMode mode);
 
-    public native EnumFPSMode getMode();
+    public native EnumMode getMode();
 
     public native boolean update(ControllerData left, ControllerData right, float frametime);
 
@@ -37,11 +37,11 @@ public class FPSViewAngles {
 
     public native float[] getSpinSpeed();
 
-    public void forceViewAngles(EnumFPSMode mode, float[] angles) {
+    public void forceViewAngles(EnumMode mode, float[] angles) {
         forceViewAngles(mode, angles[0], angles[1], angles[2]);
     }
     
-    public native void forceViewAngles(EnumFPSMode mode, float alpha, float beta, float gamma);
+    public native void forceViewAngles(EnumMode mode, float alpha, float beta, float gamma);
 
     public void setFeetAnglesMetroid(float[] angles) {
         setFeetAnglesMetroid(angles[0], angles[1], angles[2]);
@@ -51,9 +51,9 @@ public class FPSViewAngles {
 
     public native float[] getFeetAnglesMetroid();
 
-    public native void setParameter(EnumFPSParams param, float val);
+    public native void setParameter(EnumViewParam param, float val);
 
-    public native float getParameter(EnumFPSParams param);
+    public native float getParameter(EnumViewParam param);
 
     public native void setFov(float hfov, float vfov);
 

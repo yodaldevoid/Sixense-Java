@@ -6,10 +6,10 @@ import com.sixense.utils.enums.EnumMovementParam;
 /**
  * @author Yoda12999
  */
-public class FPSPlayerMovement {
+public class PlayerMovement {
     private long peer;
     
-    public FPSPlayerMovement()  {
+    public PlayerMovement()  {
         peer = create();
     }
     

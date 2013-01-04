@@ -1,13 +1,13 @@
 #include "sixense_java_utils.h"
 #include "fps.hpp"
-#include "com_sixense_utils_FPSPlayerMovement.h"
+#include "com_sixense_utils_PlayerMovement.h"
 
-JNIEXPORT jlong JNICALL Java_com_sixense_utils_FPSPlayerMovement_create(JNIEnv *, jobject) {
+JNIEXPORT jlong JNICALL Java_com_sixense_utils_PlayerMovement_create(JNIEnv *, jobject) {
     sixenseUtils::FPSPlayerMovement * pMovement = new sixenseUtils::FPSPlayerMovement();
     return (jlong) pMovement;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_destroy(JNIEnv *env, jobject self) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_PlayerMovement_destroy(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     jlong peer = env->GetLongField(self, fid);
     if(peer == 0) {
@@ -17,7 +17,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_destroy(JNIEnv *
     return;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_setGame(JNIEnv *env, jobject self, jstring str) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_PlayerMovement_setGame(JNIEnv *env, jobject self, jstring str) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
     const char * nstr = env->GetStringUTFChars(str, NULL);
@@ -28,7 +28,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_setGame(JNIEnv *
     return;
 }
 
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_FPSPlayerMovement_update(JNIEnv *env, jobject self, jobject leftRef, jobject rightRef, jfloat flo) {
+JNIEXPORT jboolean JNICALL Java_com_sixense_utils_PlayerMovement_update(JNIEnv *env, jobject self, jobject leftRef, jobject rightRef, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
     sixenseControllerData * leftData = getControllerData(env, leftRef);
@@ -36,7 +36,7 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_FPSPlayerMovement_update(JNIEn
     return pMovement->update(leftData, rightData, flo) == SIXENSE_SUCCESS ? JNI_TRUE : JNI_FALSE;
 }
 
-JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSPlayerMovement_getWalkDir(JNIEnv *env, jobject self) {
+JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_PlayerMovement_getWalkDir(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
     Vector2 vec = pMovement->getWalkDir();
@@ -46,7 +46,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_FPSPlayerMovement_getWalkDi
     return arr;
 }
 
-JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_setParameter(JNIEnv *env, jobject self, jobject enumObj, jfloat flo) {
+JNIEXPORT void JNICALL Java_com_sixense_utils_PlayerMovement_setParameter(JNIEnv *env, jobject self, jobject enumObj, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
     sixenseUtils::FPSPlayerMovement::fps_movement_params param;
@@ -73,7 +73,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_FPSPlayerMovement_setParameter(JNI
     return;
 }
 
-JNIEXPORT jfloat JNICALL Java_com_sixense_utils_FPSPlayerMovement_getParameter(JNIEnv *env, jobject self, jobject enumObj) {
+JNIEXPORT jfloat JNICALL Java_com_sixense_utils_PlayerMovement_getParameter(JNIEnv *env, jobject self, jobject enumObj) {
     jfieldID fid = getPeerID(env, self);
     sixenseUtils::FPSPlayerMovement * pMovement = (sixenseUtils::FPSPlayerMovement *)env->GetLongField(self, fid);
     sixenseUtils::FPSPlayerMovement::fps_movement_params param;
