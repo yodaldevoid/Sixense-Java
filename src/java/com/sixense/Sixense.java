@@ -7,8 +7,12 @@ public class Sixense {
     static {
 
         if("x86".equals(System.getProperty("os.arch"))) {
+            System.loadLibrary("sixense");
+            System.loadLibrary("sixense_utils");
             System.loadLibrary("SixenseJava32");
         } else {
+            System.loadLibrary("sixense_x64");
+            System.loadLibrary("sixense_utils_x64");
             System.loadLibrary("SixenseJava64");
         }
     }

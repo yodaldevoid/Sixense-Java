@@ -50,7 +50,7 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ViewAngles_getMode
 /*
  * Class:     com_sixense_utils_ViewAngles
  * Method:    update
- * Signature: (Lcom/sixense/ControllerData;Lcom/sixense/ControllerData;F)I
+ * Signature: (Lcom/sixense/ControllerData;Lcom/sixense/ControllerData;F)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ViewAngles_update
   (JNIEnv *, jobject, jobject, jobject, jfloat);
@@ -106,7 +106,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFeetAnglesMet
 /*
  * Class:     com_sixense_utils_ViewAngles
  * Method:    setParameter
- * Signature: (Lcom/sixense/utils/enums/EnumViewParams;F)V
+ * Signature: (Lcom/sixense/utils/enums/EnumViewParam;F)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setParameter
   (JNIEnv *, jobject, jobject, jfloat);
@@ -114,7 +114,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setParameter
 /*
  * Class:     com_sixense_utils_ViewAngles
  * Method:    getParameter
- * Signature: (Lcom/sixense/utils/enums/EnumViewParams;)F
+ * Signature: (Lcom/sixense/utils/enums/EnumViewParam;)F
  */
 JNIEXPORT jfloat JNICALL Java_com_sixense_utils_ViewAngles_getParameter
   (JNIEnv *, jobject, jobject);

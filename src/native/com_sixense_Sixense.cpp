@@ -1,5 +1,6 @@
 #include "sixense.h"
 #include "com_sixense_Sixense.h"
+#include "sixense_java_utils.h"
 
 JNIEXPORT jboolean JNICALL Java_com_sixense_Sixense_init(JNIEnv *, jclass) {
     int i;

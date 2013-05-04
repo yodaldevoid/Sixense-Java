@@ -10,7 +10,7 @@ extern "C" {
 /*
  * Class:     com_sixense_utils_ButtonStates
  * Method:    create
- * Signature: ()L
+ * Signature: ()J
  */
 JNIEXPORT jlong JNICALL Java_com_sixense_utils_ButtonStates_create
   (JNIEnv *, jobject);
@@ -18,10 +18,10 @@ JNIEXPORT jlong JNICALL Java_com_sixense_utils_ButtonStates_create
 /*
  * Class:     com_sixense_utils_ButtonStates
  * Method:    destroy
- * Signature: (L)V
+ * Signature: ()V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_destroy
-  (JNIEnv *, jobject, jlong);
+  (JNIEnv *, jobject);
 
 /*
  * Class:     com_sixense_utils_ButtonStates
@@ -33,43 +33,11 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_update
 
 /*
  * Class:     com_sixense_utils_ButtonStates
- * Method:    buttonJustPressed
- * Signature: (I)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_buttonJustPressed
-  (JNIEnv *, jobject, jint);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    buttonJustReleased
- * Signature: (I)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_buttonJustReleased
-  (JNIEnv *, jobject, jint);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
  * Method:    setTriggerThreshold
  * Signature: (F)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_setTriggerThreshold
   (JNIEnv *, jobject, jfloat);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    triggerJustPressed
- * Signature: ()Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_triggerJustPressed
-  (JNIEnv *, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    triggerJustReleased
- * Signature: ()Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_triggerJustReleased
-  (JNIEnv *, jobject);
 
 /*
  * Class:     com_sixense_utils_ButtonStates
@@ -81,23 +49,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_setStickThreshold
 
 /*
  * Class:     com_sixense_utils_ButtonStates
- * Method:    stickJustPressed
- * Signature: (Lcom/sixense/utils/enums/EnumDirection;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_stickJustPressed
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    stickJustReleased
- * Signature: (Lcom/sixense/utils/enums/EnumDirection;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_stickJustReleased
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    setAbsoluteTiltAngleThresholdInDeg
+ * Method:    setAbsoluteTiltAngleThreshold
  * Signature: (F)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_setAbsoluteTiltAngleThreshold
@@ -105,7 +57,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_setAbsoluteTiltAngleT
 
 /*
  * Class:     com_sixense_utils_ButtonStates
- * Method:    setRelativeTiltAngleThresholdInDeg
+ * Method:    setRelativeTiltAngleThreshold
  * Signature: (F)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_setRelativeTiltAngleThreshold
@@ -134,38 +86,6 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_startPointGesture
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ButtonStates_stopPointGesture
   (JNIEnv *, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    relativeTiltJustStarted
- * Signature: (Lcom/sixense/utils/enums/EnumDirection;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_relativeTiltJustStarted
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    relativeTiltJustStopped
- * Signature: (Lcom/sixense/utils/enums/EnumDirection;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_relativeTiltJustStopped
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    absoluteTiltJustStarted
- * Signature: (Lcom/sixense/utils/enums/EnumDirection;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_absoluteTiltJustStarted
-  (JNIEnv *, jobject, jobject);
-
-/*
- * Class:     com_sixense_utils_ButtonStates
- * Method:    absoluteTiltJustStopped
- * Signature: (Lcom/sixense/utils/enums/EnumDirection;)Z
- */
-JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ButtonStates_absoluteTiltJustStopped
-  (JNIEnv *, jobject, jobject);
 
 /*
  * Class:     com_sixense_utils_ButtonStates

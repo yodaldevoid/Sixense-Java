@@ -98,7 +98,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_Events_getGrenadeThrowVeloc
 /*
  * Class:     com_sixense_utils_Events
  * Method:    setParameter
- * Signature: (Lcom/sixense/utils/enums/EnumEventParams;F)V
+ * Signature: (Lcom/sixense/utils/enums/EnumEventParam;F)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setParameter
   (JNIEnv *, jobject, jobject, jfloat);
@@ -106,7 +106,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_Events_setParameter
 /*
  * Class:     com_sixense_utils_Events
  * Method:    getParameter
- * Signature: (Lcom/sixense/utils/enums/EnumEventParams;)F
+ * Signature: (Lcom/sixense/utils/enums/EnumEventParam;)F
  */
 JNIEXPORT jfloat JNICALL Java_com_sixense_utils_Events_getParameter
   (JNIEnv *, jobject, jobject);

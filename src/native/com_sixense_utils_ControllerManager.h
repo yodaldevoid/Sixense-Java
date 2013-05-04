@@ -10,7 +10,7 @@ extern "C" {
 /*
  * Class:     com_sixense_utils_ControllerManager
  * Method:    setGameType
- * Signature: (Lcom/sixense/utils/EnumGameType;)V
+ * Signature: (Lcom/sixense/utils/enums/EnumGameType;)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ControllerManager_setGameType
   (JNIEnv *, jobject, jobject);
@@ -18,7 +18,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ControllerManager_setGameType
 /*
  * Class:     com_sixense_utils_ControllerManager
  * Method:    getGameType
- * Signature: ()Lcom/sixense/utils/EnumGameType;
+ * Signature: ()Lcom/sixense/utils/enums/EnumGameType;
  */
 JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_getGameType
   (JNIEnv *, jobject);
@@ -34,7 +34,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ControllerManager_update
 /*
  * Class:     com_sixense_utils_ControllerManager
  * Method:    getIndex
- * Signature: (Lcom/sixense/utils/EnumControllerDesc;)I
+ * Signature: (Lcom/sixense/utils/enums/EnumControllerDesc;)I
  */
 JNIEXPORT jint JNICALL Java_com_sixense_utils_ControllerManager_getIndex
   (JNIEnv *, jobject, jobject);
@@ -50,7 +50,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ControllerManager_rebind
 /*
  * Class:     com_sixense_utils_ControllerManager
  * Method:    registerSetupCallback
- * Signature: (Ljava/lang/Object;Ljava/lang/String;)V
+ * Signature: (Lcom/sixense/utils/ManagerCallback;)V
  */
 JNIEXPORT void JNICALL Java_com_sixense_utils_ControllerManager_registerSetupCallback
   (JNIEnv *, jobject, jobject);
@@ -82,7 +82,7 @@ JNIEXPORT jstring JNICALL Java_com_sixense_utils_ControllerManager_getStepString
 /*
  * Class:     com_sixense_utils_ControllerManager
  * Method:    shouldPlaySound
- * Signature: ()Lcom/sixense/utils/EnumSoundType;
+ * Signature: ()Lcom/sixense/utils/enums/EnumSoundType;
  */
 JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_shouldPlaySound
   (JNIEnv *, jobject);
@@ -90,7 +90,7 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_shouldPlaySou
 /*
  * Class:     com_sixense_utils_ControllerManager
  * Method:    getCurrentStep
- * Signature: ()Lcom/sixense/utils/EnumSetupStep;
+ * Signature: ()Lcom/sixense/utils/enums/EnumSetupStep;
  */
 JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_getCurrentStep
   (JNIEnv *, jobject);
@@ -98,9 +98,4 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_getCurrentSte
 #ifdef __cplusplus
 }
 #endif
-
-JavaVM* jvm;
-jobject cbRef;
-
-void callback(sixenseUtils::ControllerManager::setup_step step);
 #endif

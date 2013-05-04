@@ -34,7 +34,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_PlayerMovement_setGame
 /*
  * Class:     com_sixense_utils_PlayerMovement
  * Method:    update
- * Signature: (Lcom/sixense/ControllerData;Lcom/sixense/ControllerData;F)I
+ * Signature: (Lcom/sixense/ControllerData;Lcom/sixense/ControllerData;F)Z
  */
 JNIEXPORT jboolean JNICALL Java_com_sixense_utils_PlayerMovement_update
   (JNIEnv *, jobject, jobject, jobject, jfloat);
