@@ -39,8 +39,8 @@ public class ButtonStates {
      * @param button the button to check
      * @return true if the button was pressed
      */
-    public boolean buttonJustPressed(EnumButton b) {
-        return justStarted(EnumActionType.BUTTON_PRESS, b.mask());
+    public boolean buttonJustPressed(EnumButton button) {
+        return justStarted(EnumActionType.BUTTON_PRESS, button.mask());
     }
 
     /**
@@ -49,8 +49,8 @@ public class ButtonStates {
      * @param button the button to check
      * @return true if the button was released
      */
-    public boolean buttonJustReleased(EnumButton b) {
-        return justStopped(EnumActionType.BUTTON_PRESS, b.mask());
+    public boolean buttonJustReleased(EnumButton button) {
+        return justStopped(EnumActionType.BUTTON_PRESS, button.mask());
     }
 
     /**
