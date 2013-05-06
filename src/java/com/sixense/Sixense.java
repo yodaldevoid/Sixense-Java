@@ -8,12 +8,18 @@ public class Sixense {
 
         if("x86".equals(System.getProperty("os.arch"))) {
             System.loadLibrary("sixense");
+            System.out.println("sixense loaded");
             System.loadLibrary("sixense_utils");
+            System.out.println("sixense_utils loaded");
             System.loadLibrary("SixenseJava32");
+            System.out.println("SixenseJava32 loaded");
         } else {
             System.loadLibrary("sixense_x64");
+            System.out.println("sixense_x64 loaded");
             System.loadLibrary("sixense_utils_x64");
+            System.out.println("sixense_utils_x64 loaded");
             System.loadLibrary("SixenseJava64");
+            System.out.println("SixenseJava64 loaded");
         }
     }
 
