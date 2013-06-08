@@ -2,7 +2,7 @@ package com.sixense.utils;
 
 import com.sixense.utils.enums.EnumSetupStep;
 
-/**
+/*
  * @author Yoda12999
  */
 public interface ManagerCallback {

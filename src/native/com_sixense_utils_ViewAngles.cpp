@@ -2,8 +2,10 @@
 #include "fps.hpp"
 #include "com_sixense_utils_ViewAngles.h"
 
+using sixenseUtils::FPSViewAngles;
+
 JNIEXPORT jlong JNICALL Java_com_sixense_utils_ViewAngles_create(JNIEnv *, jobject) {
-    sixenseUtils::FPSViewAngles * vAngles = new sixenseUtils::FPSViewAngles();
+    FPSViewAngles * vAngles = new FPSViewAngles();
     return (jlong) vAngles;
 }
 
@@ -19,7 +21,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_destroy(JNIEnv *env, jo
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setGame(JNIEnv *env, jobject self, jstring str) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     const char * nstr = env->GetStringUTFChars(str, NULL);
     if(nstr == NULL) {
         return;
@@ -30,7 +32,7 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setGame(JNIEnv *env, jo
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setMode(JNIEnv *env, jobject self, jobject enumObj) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMode");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
@@ -38,37 +40,37 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setMode(JNIEnv *env, jo
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "MOUSELOOK") == 0) {
-        vAngles->setMode(sixenseUtils::IFPSViewAngles::MOUSELOOK);
+        vAngles->setMode(FPSViewAngles::MOUSELOOK);
     } else if(strcmp(valueNative, "FREE_AIM_TWO_CONTROLLER") == 0) {
-        vAngles->setMode(sixenseUtils::FPSViewAngles::FREE_AIM_TWO_CONTROLLER);
+        vAngles->setMode(FPSViewAngles::FREE_AIM_TWO_CONTROLLER);
     } else if(strcmp(valueNative, "FREE_AIM_ONE_CONTROLLER") == 0) {
-        vAngles->setMode(sixenseUtils::FPSViewAngles::FREE_AIM_ONE_CONTROLLER);
+        vAngles->setMode(FPSViewAngles::FREE_AIM_ONE_CONTROLLER);
     } else if(strcmp(valueNative, "DUAL_ANALOG") == 0) {
-        vAngles->setMode(sixenseUtils::FPSViewAngles::DUAL_ANALOG);
+        vAngles->setMode(FPSViewAngles::DUAL_ANALOG);
     }
     return;
 }
 
 JNIEXPORT jobject JNICALL Java_com_sixense_utils_ViewAngles_getMode(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMode");
     if(enumClass == NULL) return NULL;
     jmethodID cid = env->GetMethodID(enumClass, "<init>", "(Ljava/lang/String;I)V");
     if(cid == NULL) return NULL;
-    sixenseUtils::FPSViewAngles::fps_mode mode = vAngles->getMode();
+    FPSViewAngles::fps_mode mode = vAngles->getMode();
     jstring enumStr = NULL;
     jint i = -1;
-    if(mode == sixenseUtils::FPSViewAngles::MOUSELOOK) {
+    if(mode == FPSViewAngles::MOUSELOOK) {
         enumStr = env->NewStringUTF("MOUSELOOK");
         i = 0;
-    } else if(mode == sixenseUtils::FPSViewAngles::FREE_AIM_TWO_CONTROLLER) {
+    } else if(mode == FPSViewAngles::FREE_AIM_TWO_CONTROLLER) {
         enumStr = env->NewStringUTF("FREE_AIM_TWO_CONTROLLER");
         i = 1;
-    } else if(mode == sixenseUtils::FPSViewAngles::FREE_AIM_ONE_CONTROLLER) {
+    } else if(mode == FPSViewAngles::FREE_AIM_ONE_CONTROLLER) {
         enumStr = env->NewStringUTF("FREE_AIM_ONE_CONTROLLER");
         i = 2;
-    } else if(mode == sixenseUtils::FPSViewAngles::DUAL_ANALOG) {
+    } else if(mode == FPSViewAngles::DUAL_ANALOG) {
         enumStr = env->NewStringUTF("DUAL_ANALOG");
         i = 3;
     }
@@ -81,7 +83,7 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ViewAngles_getMode(JNIEnv *env,
 
 JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ViewAngles_update(JNIEnv *env, jobject self, jobject leftRef, jobject rightRef, jfloat frametime) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     sixenseControllerData * leftData = getControllerData(env, leftRef);
     sixenseControllerData * rightData = getControllerData(env, rightRef);
     return vAngles->update(leftData, rightData, frametime) == SIXENSE_SUCCESS ? JNI_TRUE : JNI_FALSE;
@@ -89,7 +91,7 @@ JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ViewAngles_update(JNIEnv *env,
 
 JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getViewAngles(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getViewAngles();
     jfloatArray arr = NULL;
     jfloat arr2[3] = {vec[0], vec[1], vec[2]};
@@ -99,7 +101,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getViewAngles(JN
 
 JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getViewAngleOffset(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getViewAngleOffset();
     jfloatArray arr = NULL;
     jfloat arr2[3] = {vec[0], vec[1], vec[2]};
@@ -109,7 +111,7 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getViewAngleOffs
 
 JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getSpinSpeed(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getSpinSpeed();
     jfloatArray arr = NULL;
     jfloat arr2[3] = {vec[0], vec[1], vec[2]};
@@ -119,8 +121,8 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getSpinSpeed(JNI
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceViewAngles(JNIEnv *env, jobject self, jobject enumObj, jfloat flo1, jfloat flo2, jfloat flo3) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
-    sixenseUtils::FPSViewAngles::fps_mode mode;
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles::fps_mode mode;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumMode");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
@@ -128,13 +130,13 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceViewAngles(JNIEnv 
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "MOUSELOOK") == 0) {
-        mode = sixenseUtils::FPSViewAngles::MOUSELOOK;
+        mode = FPSViewAngles::MOUSELOOK;
     } else if(strcmp(valueNative, "FREE_AIM_TWO_CONTROLLER") == 0) {
-        mode = sixenseUtils::FPSViewAngles::FREE_AIM_TWO_CONTROLLER;
+        mode = FPSViewAngles::FREE_AIM_TWO_CONTROLLER;
     } else if(strcmp(valueNative, "FREE_AIM_ONE_CONTROLLER") == 0) {
-        mode = sixenseUtils::FPSViewAngles::FREE_AIM_ONE_CONTROLLER;
+        mode = FPSViewAngles::FREE_AIM_ONE_CONTROLLER;
     } else {
-        mode = sixenseUtils::FPSViewAngles::DUAL_ANALOG;
+        mode = FPSViewAngles::DUAL_ANALOG;
     }
     Vector3 vec = Vector3(flo1, flo2, flo3);
     vAngles->forceViewAngles(mode, vec);
@@ -142,14 +144,14 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceViewAngles(JNIEnv 
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setFeetAnglesMetroid(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2, jfloat flo3) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = Vector3(flo1, flo2, flo3);
     vAngles->setFeetAnglesMetroid(vec);
 }
 
 JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFeetAnglesMetroid(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     Vector3 vec = vAngles->getFeetAnglesMetroid();
     jfloatArray arr = NULL;
     jfloat arr2[3] = {vec[0], vec[1], vec[2]};
@@ -159,8 +161,8 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFeetAnglesMet
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setParameter(JNIEnv *env, jobject self, jobject enumObj, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
-    sixenseUtils::FPSViewAngles::fps_params param;
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles::fps_params param;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumViewParam");
     if(enumClass == NULL) return;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
@@ -168,65 +170,65 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setParameter(JNIEnv *en
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "CONTROLLER_ANGLE_MODE") == 0) {
-        param = sixenseUtils::FPSViewAngles::CONTROLLER_ANGLE_MODE;
+        param = FPSViewAngles::CONTROLLER_ANGLE_MODE;
     } else if(strcmp(valueNative, "AIM_1TO1_HEADING_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_1TO1_HEADING_MULTIPLIER;
+        param = FPSViewAngles::AIM_1TO1_HEADING_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_1TO1_PITCH_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_1TO1_PITCH_MULTIPLIER;
+        param = FPSViewAngles::AIM_1TO1_PITCH_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_1TO1_RATCHET_VERTICAL") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_1TO1_RATCHET_VERTICAL;
+        param = FPSViewAngles::AIM_1TO1_RATCHET_VERTICAL;
     } else if(strcmp(valueNative, "AIM_METROID_HEADING_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_HEADING_MULTIPLIER;
+        param = FPSViewAngles::AIM_METROID_HEADING_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_METROID_PITCH_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_PITCH_MULTIPLIER;
+        param = FPSViewAngles::AIM_METROID_PITCH_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_METROID_DEAD_ZONE_RADIUS") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_DEAD_ZONE_RADIUS;
+        param = FPSViewAngles::AIM_METROID_DEAD_ZONE_RADIUS;
     } else if(strcmp(valueNative, "AIM_METROID_ACCEL_BAND_SIZE") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_ACCEL_BAND_SIZE;
+        param = FPSViewAngles::AIM_METROID_ACCEL_BAND_SIZE;
     } else if(strcmp(valueNative, "AIM_METROID_MAX_SPEED") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_MAX_SPEED;
+        param = FPSViewAngles::AIM_METROID_MAX_SPEED;
     } else if(strcmp(valueNative, "AIM_METROID_AUTO_LEVEL_RATE") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_AUTO_LEVEL_RATE;
+        param = FPSViewAngles::AIM_METROID_AUTO_LEVEL_RATE;
     } else if(strcmp(valueNative, "AIM_METROID_ACCEL_BAND_EXPONENT") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_ACCEL_BAND_EXPONENT;
+        param = FPSViewAngles::AIM_METROID_ACCEL_BAND_EXPONENT;
     } else if(strcmp(valueNative, "AIM_METROID_SWITCH_BLEND_TIME_ENTER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_ENTER;
+        param = FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_ENTER;
     } else if(strcmp(valueNative, "AIM_METROID_SWITCH_BLEND_TIME_EXIT") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_EXIT;
+        param = FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_EXIT;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_HORIZ_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_HORIZ_MULTIPLIER;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_HORIZ_MULTIPLIER;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_VERT_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_VERT_MULTIPLIER;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_VERT_MULTIPLIER;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_INVERT_PITCH") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_INVERT_PITCH;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_INVERT_PITCH;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_EXPONENT") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_EXPONENT;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_EXPONENT;
     } else if(strcmp(valueNative, "PITCH_CHANGE_BLEND_VAL") == 0) {
-        param = sixenseUtils::FPSViewAngles::PITCH_CHANGE_BLEND_VAL;
+        param = FPSViewAngles::PITCH_CHANGE_BLEND_VAL;
     } else if(strcmp(valueNative, "SPRING_VIEW_ENABLED") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_ENABLED;
+        param = FPSViewAngles::SPRING_VIEW_ENABLED;
     } else if(strcmp(valueNative, "SPRING_VIEW_MIN_SPRING") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MIN_SPRING;
+        param = FPSViewAngles::SPRING_VIEW_MIN_SPRING;
     } else if(strcmp(valueNative, "SPRING_VIEW_MAX_SPRING") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MAX_SPRING;
+        param = FPSViewAngles::SPRING_VIEW_MAX_SPRING;
     } else if(strcmp(valueNative, "SPRING_VIEW_MIN_ANGLE") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MIN_ANGLE;
+        param = FPSViewAngles::SPRING_VIEW_MIN_ANGLE;
     } else if(strcmp(valueNative, "SPRING_VIEW_MAX_ANGLE") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MAX_ANGLE;
+        param = FPSViewAngles::SPRING_VIEW_MAX_ANGLE;
     } else if(strcmp(valueNative, "FEET_ANGLES_ALLOW_VERT_STICK_SPIN") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_ALLOW_VERT_STICK_SPIN;
+        param = FPSViewAngles::FEET_ANGLES_ALLOW_VERT_STICK_SPIN;
     } else if(strcmp(valueNative, "AIM_METROID_ACCEL_BAND_POWER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_ACCEL_BAND_POWER;
+        param = FPSViewAngles::AIM_METROID_ACCEL_BAND_POWER;
     } else if(strcmp(valueNative, "HOLDING_TURN_SPEED") == 0) {
-        param = sixenseUtils::FPSViewAngles::HOLDING_TURN_SPEED;
+        param = FPSViewAngles::HOLDING_TURN_SPEED;
     } else if(strcmp(valueNative, "ROLL_CORRECTION_BLEND") == 0) {
-        param = sixenseUtils::FPSViewAngles::ROLL_CORRECTION_BLEND;
+        param = FPSViewAngles::ROLL_CORRECTION_BLEND;
     } else if(strcmp(valueNative, "EXIT_METROID_BLEND") == 0) {
-        param = sixenseUtils::FPSViewAngles::EXIT_METROID_BLEND;
+        param = FPSViewAngles::EXIT_METROID_BLEND;
     } else if(strcmp(valueNative, "LEFT_HANDED") == 0) {
-        param = sixenseUtils::FPSViewAngles::LEFT_HANDED;
+        param = FPSViewAngles::LEFT_HANDED;
     } else {
-        param = sixenseUtils::FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
+        param = FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
     }
     vAngles->setParameter(param, flo);
     return;
@@ -234,8 +236,8 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setParameter(JNIEnv *en
 
 JNIEXPORT jfloat JNICALL Java_com_sixense_utils_ViewAngles_getParameter(JNIEnv *env, jobject self, jobject enumObj) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
-    sixenseUtils::FPSViewAngles::fps_params param;
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles::fps_params param;
     jclass enumClass = env->FindClass("com/sixense/utils/enums/EnumViewParams");
     if(enumClass == NULL) return 0;
     jmethodID getNameMethod = env->GetMethodID(enumClass, "name", "()Ljava/lang/String;");
@@ -243,78 +245,78 @@ JNIEXPORT jfloat JNICALL Java_com_sixense_utils_ViewAngles_getParameter(JNIEnv *
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "CONTROLLER_ANGLE_MODE") == 0) {
-        param = sixenseUtils::FPSViewAngles::CONTROLLER_ANGLE_MODE;
+        param = FPSViewAngles::CONTROLLER_ANGLE_MODE;
     } else if(strcmp(valueNative, "AIM_1TO1_HEADING_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_1TO1_HEADING_MULTIPLIER;
+        param = FPSViewAngles::AIM_1TO1_HEADING_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_1TO1_PITCH_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_1TO1_PITCH_MULTIPLIER;
+        param = FPSViewAngles::AIM_1TO1_PITCH_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_1TO1_RATCHET_VERTICAL") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_1TO1_RATCHET_VERTICAL;
+        param = FPSViewAngles::AIM_1TO1_RATCHET_VERTICAL;
     } else if(strcmp(valueNative, "AIM_METROID_HEADING_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_HEADING_MULTIPLIER;
+        param = FPSViewAngles::AIM_METROID_HEADING_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_METROID_PITCH_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_PITCH_MULTIPLIER;
+        param = FPSViewAngles::AIM_METROID_PITCH_MULTIPLIER;
     } else if(strcmp(valueNative, "AIM_METROID_DEAD_ZONE_RADIUS") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_DEAD_ZONE_RADIUS;
+        param = FPSViewAngles::AIM_METROID_DEAD_ZONE_RADIUS;
     } else if(strcmp(valueNative, "AIM_METROID_ACCEL_BAND_SIZE") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_ACCEL_BAND_SIZE;
+        param = FPSViewAngles::AIM_METROID_ACCEL_BAND_SIZE;
     } else if(strcmp(valueNative, "AIM_METROID_MAX_SPEED") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_MAX_SPEED;
+        param = FPSViewAngles::AIM_METROID_MAX_SPEED;
     } else if(strcmp(valueNative, "AIM_METROID_AUTO_LEVEL_RATE") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_AUTO_LEVEL_RATE;
+        param = FPSViewAngles::AIM_METROID_AUTO_LEVEL_RATE;
     } else if(strcmp(valueNative, "AIM_METROID_ACCEL_BAND_EXPONENT") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_ACCEL_BAND_EXPONENT;
+        param = FPSViewAngles::AIM_METROID_ACCEL_BAND_EXPONENT;
     } else if(strcmp(valueNative, "AIM_METROID_SWITCH_BLEND_TIME_ENTER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_ENTER;
+        param = FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_ENTER;
     } else if(strcmp(valueNative, "AIM_METROID_SWITCH_BLEND_TIME_EXIT") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_EXIT;
+        param = FPSViewAngles::AIM_METROID_SWITCH_BLEND_TIME_EXIT;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_HORIZ_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_HORIZ_MULTIPLIER;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_HORIZ_MULTIPLIER;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_VERT_MULTIPLIER") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_VERT_MULTIPLIER;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_VERT_MULTIPLIER;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_INVERT_PITCH") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_INVERT_PITCH;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_INVERT_PITCH;
     } else if(strcmp(valueNative, "FEET_ANGLES_OFFSET_STICK_SPIN_EXPONENT") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_EXPONENT;
+        param = FPSViewAngles::FEET_ANGLES_OFFSET_STICK_SPIN_EXPONENT;
     } else if(strcmp(valueNative, "PITCH_CHANGE_BLEND_VAL") == 0) {
-        param = sixenseUtils::FPSViewAngles::PITCH_CHANGE_BLEND_VAL;
+        param = FPSViewAngles::PITCH_CHANGE_BLEND_VAL;
     } else if(strcmp(valueNative, "SPRING_VIEW_ENABLED") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_ENABLED;
+        param = FPSViewAngles::SPRING_VIEW_ENABLED;
     } else if(strcmp(valueNative, "SPRING_VIEW_MIN_SPRING") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MIN_SPRING;
+        param = FPSViewAngles::SPRING_VIEW_MIN_SPRING;
     } else if(strcmp(valueNative, "SPRING_VIEW_MAX_SPRING") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MAX_SPRING;
+        param = FPSViewAngles::SPRING_VIEW_MAX_SPRING;
     } else if(strcmp(valueNative, "SPRING_VIEW_MIN_ANGLE") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MIN_ANGLE;
+        param = FPSViewAngles::SPRING_VIEW_MIN_ANGLE;
     } else if(strcmp(valueNative, "SPRING_VIEW_MAX_ANGLE") == 0) {
-        param = sixenseUtils::FPSViewAngles::SPRING_VIEW_MAX_ANGLE;
+        param = FPSViewAngles::SPRING_VIEW_MAX_ANGLE;
     } else if(strcmp(valueNative, "FEET_ANGLES_ALLOW_VERT_STICK_SPIN") == 0) {
-        param = sixenseUtils::FPSViewAngles::FEET_ANGLES_ALLOW_VERT_STICK_SPIN;
+        param = FPSViewAngles::FEET_ANGLES_ALLOW_VERT_STICK_SPIN;
     } else if(strcmp(valueNative, "AIM_METROID_ACCEL_BAND_POWER") == 0) {
-        param = sixenseUtils::FPSViewAngles::AIM_METROID_ACCEL_BAND_POWER;
+        param = FPSViewAngles::AIM_METROID_ACCEL_BAND_POWER;
     } else if(strcmp(valueNative, "HOLDING_TURN_SPEED") == 0) {
-        param = sixenseUtils::FPSViewAngles::HOLDING_TURN_SPEED;
+        param = FPSViewAngles::HOLDING_TURN_SPEED;
     } else if(strcmp(valueNative, "ROLL_CORRECTION_BLEND") == 0) {
-        param = sixenseUtils::FPSViewAngles::ROLL_CORRECTION_BLEND;
+        param = FPSViewAngles::ROLL_CORRECTION_BLEND;
     } else if(strcmp(valueNative, "EXIT_METROID_BLEND") == 0) {
-        param = sixenseUtils::FPSViewAngles::EXIT_METROID_BLEND;
+        param = FPSViewAngles::EXIT_METROID_BLEND;
     } else if(strcmp(valueNative, "LEFT_HANDED") == 0) {
-        param = sixenseUtils::FPSViewAngles::LEFT_HANDED;
+        param = FPSViewAngles::LEFT_HANDED;
     } else {
-        param = sixenseUtils::FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
+        param = FPSViewAngles::LAST_FPS_VIEW_ANGLES_PARAM;
     }
     return vAngles->getParameter(param);
 }
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setFov(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->setFov(flo1, flo2);
 }
 
 JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFov(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     float *h = 0, *v = 0;
     vAngles->getFov(h, v);
     jfloatArray arr = NULL;
@@ -325,34 +327,34 @@ JNIEXPORT jfloatArray JNICALL Java_com_sixense_utils_ViewAngles_getFov(JNIEnv *e
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setHoldingTurnSpeed(JNIEnv *env, jobject self, jfloat flo1, jfloat flo2) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->setHoldingTurnSpeed(flo1, flo2);
     return;
 }
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_setRatcheting(JNIEnv *env, jobject self, jboolean b) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->setRatcheting(b == JNI_TRUE);
     return;
 }
 
 JNIEXPORT jboolean JNICALL Java_com_sixense_utils_ViewAngles_isRatcheting(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     return vAngles->isRatcheting() ? JNI_TRUE : JNI_FALSE;
 }
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_reset(JNIEnv *env, jobject self) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->reset();
     return;
 }
 
 JNIEXPORT void JNICALL Java_com_sixense_utils_ViewAngles_forceMetroidBlend(JNIEnv *env, jobject self, jfloat flo) {
     jfieldID fid = getPeerID(env, self);
-    sixenseUtils::FPSViewAngles * vAngles = (sixenseUtils::FPSViewAngles *)env->GetLongField(self, fid);
+    FPSViewAngles * vAngles = (FPSViewAngles *)env->GetLongField(self, fid);
     vAngles->forceMetroidBlend(flo);
     return;
 }

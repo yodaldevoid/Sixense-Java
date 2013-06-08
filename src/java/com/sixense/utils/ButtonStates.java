@@ -4,7 +4,7 @@ import com.sixense.ControllerData;
 import com.sixense.EnumButton;
 import com.sixense.utils.enums.*;
 
-/**
+/*
  * @author Yoda12999
  */
 public class ButtonStates {
@@ -186,32 +186,32 @@ public class ButtonStates {
     /**
      *
      *
-     * @param action action type to judge the direction by
-     * @param arg
+     * @param type action type to judge the direction by
+     * @param action
      * @return true if the specified direction of joystick press/gesture just
      * stopped
      */
-    public boolean justStarted(EnumActionType action, Enum arg) {
-        if(arg instanceof EnumButton) {
-            return justStarted(action, ((EnumButton) arg).mask());
+    public boolean justStarted(EnumActionType type, Enum action) {
+        if(action instanceof EnumButton) {
+            return justStarted(type, ((EnumButton) action).mask());
         } else {
-            return justStarted(action, arg.ordinal());
+            return justStarted(type, action.ordinal());
         }
     }
 
     /**
      *
      *
-     * @param action action type to judge the direction by
-     * @param arg
+     * @param type action type to judge the direction by
+     * @param action
      * @return true if the specified direction of joystick press/gesture just
      * stopped
      */
-    public boolean justStopped(EnumActionType action, Enum arg) {
-        if(arg instanceof EnumButton) {
-            return justStarted(action, ((EnumButton) arg).mask());
+    public boolean justStopped(EnumActionType type, Enum action) {
+        if(action instanceof EnumButton) {
+            return justStarted(type, ((EnumButton) action).mask());
         } else {
-            return justStopped(action, arg.ordinal());
+            return justStopped(type, action.ordinal());
         }
     }
 }

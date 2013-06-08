@@ -1,6 +1,6 @@
 package com.sixense;
 
-/**
+/*
  * @author Yoda12999
  */
 public enum EnumButton {

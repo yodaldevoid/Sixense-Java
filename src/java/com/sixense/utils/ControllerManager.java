@@ -2,21 +2,22 @@ package com.sixense.utils;
 
 import com.sixense.utils.enums.*;
 
-/**
+/*
  * @author Yoda12999
  */
 public class ControllerManager {
     private static ControllerManager instance = null;
 
-    protected ControllerManager() {}
-    
+    protected ControllerManager() {
+    }
+
     public static ControllerManager getInstance() {
         if(instance == null) {
             instance = new ControllerManager();
         }
         return instance;
     }
-    
+
     /**
      * @param gameType
      */
@@ -28,14 +29,17 @@ public class ControllerManager {
     public native EnumGameType getGameType();
 
     /**
-     * Update the <code>ControllerManager</code>. Should be called each frame.
+     * Update the
+     * <code>ControllerManager</code>. Should be called each frame.
      *
-     * @param allData <code>ControllerData[]</code> filled by <code>Sixense.update()</code>
+     * @param allData <code>ControllerData[]</code> filled
+     * by <code>Sixense.update()</code>
      */
     public native void update(com.sixense.ControllerData[] allData);
 
     /**
-     * Get the <code>ControllerData[]</code> index for the given description.
+     * Get the
+     * <code>ControllerData[]</code> index for the given description.
      *
      * @param controllerDesc which controller
      * @return the index
@@ -43,7 +47,8 @@ public class ControllerManager {
     public native int getIndex(EnumControllerDesc controllerDesc);
 
     /**
-     * Force the user to rebind the controllers to the player slots. Does nothing for now.
+     * Force the user to rebind the controllers to the player slots. Does
+     * nothing for now.
      */
     public native void rebind();
 
@@ -53,7 +58,8 @@ public class ControllerManager {
     public native void registerSetupCallback(ManagerCallback callback);
 
     /**
-     * Checks if the <code>ControllerManager</code>'s instructions should be shown.
+     * Checks if the
+     * <code>ControllerManager</code>'s instructions should be shown.
      *
      * @return true if the application should show the menu system
      */

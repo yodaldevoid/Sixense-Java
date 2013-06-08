@@ -2,10 +2,12 @@
 #include "controller_manager.hpp"
 #include "com_sixense_utils_ControllerManager.h"
 
+using sixenseUtils::ControllerManager;
+
 JavaVM* jvm;
 jobject cbRef;
 
-void callback(sixenseUtils::ControllerManager::setup_step step) {
+void callback(ControllerManager::setup_step step) {
     JNIEnv *env;
     jvm->GetEnv((void**) &env, JNI_VERSION_1_2);
     if(env == NULL) return;
@@ -20,54 +22,57 @@ void callback(sixenseUtils::ControllerManager::setup_step step) {
     if(cid == NULL) return;
     jstring enumStr = NULL;
     jint i = -1;
-    if(step == sixenseUtils::IControllerManager::SETUP_COMPLETE) {
+    if(step == ControllerManager::SETUP_COMPLETE) {
         enumStr = env->NewStringUTF("SETUP_COMPLETE");
         i = 0;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_0) {
-        enumStr = env->NewStringUTF("P1C1_POWER_UP_0");
+    } else if(step == ControllerManager::P1C1_START) {
+        enumStr = env->NewStringUTF("P1C1_START");
         i = 1;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_DONE) {
-        enumStr = env->NewStringUTF("P1C1_POWER_UP_DONE");
+    } else if(step == ControllerManager::P1C1_POWER_UP_0) {
+        enumStr = env->NewStringUTF("P1C1_POWER_UP_0");
         i = 2;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_AIM_P1L) {
-        enumStr = env->NewStringUTF("P1C1_AIM_P1L");
+    } else if(step == ControllerManager::P1C1_POWER_UP_DONE) {
+        enumStr = env->NewStringUTF("P1C1_POWER_UP_DONE");
         i = 3;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_DONE) {
-        enumStr = env->NewStringUTF("P1C1_DONE");
+    } else if(step == ControllerManager::P1C1_AIM_P1L) {
+        enumStr = env->NewStringUTF("P1C1_AIM_P1L");
         i = 4;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_OUT_OF_RANGE) {
-        enumStr = env->NewStringUTF("P1C1_OUT_OF_RANGE");
+    } else if(step == ControllerManager::P1C1_DONE) {
+        enumStr = env->NewStringUTF("P1C1_DONE");
         i = 5;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_IDLE) {
-        enumStr = env->NewStringUTF("P1C1_IDLE");
+    } else if(step == ControllerManager::P1C1_OUT_OF_RANGE) {
+        enumStr = env->NewStringUTF("P1C1_OUT_OF_RANGE");
         i = 6;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_START) {
-        enumStr = env->NewStringUTF("P1C2_START");
+    } else if(step == ControllerManager::P1C1_IDLE) {
+        enumStr = env->NewStringUTF("P1C1_IDLE");
         i = 7;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_0) {
-        enumStr = env->NewStringUTF("P1C2_POWER_UP_0");
+    } else if(step == ControllerManager::P1C2_START) {
+        enumStr = env->NewStringUTF("P1C2_START");
         i = 8;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_1) {
-        enumStr = env->NewStringUTF("P1C2_POWER_UP_1");
+    } else if(step == ControllerManager::P1C2_POWER_UP_0) {
+        enumStr = env->NewStringUTF("P1C2_POWER_UP_0");
         i = 9;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_DONE) {
-        enumStr = env->NewStringUTF("P1C2_POWER_UP_DONE");
+    } else if(step == ControllerManager::P1C2_POWER_UP_1) {
+        enumStr = env->NewStringUTF("P1C2_POWER_UP_1");
         i = 10;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1L) {
-        enumStr = env->NewStringUTF("P1C2_AIM_P1L");
+    } else if(step == ControllerManager::P1C2_POWER_UP_DONE) {
+        enumStr = env->NewStringUTF("P1C2_POWER_UP_DONE");
         i = 11;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1R) {
-        enumStr = env->NewStringUTF("P1C2_AIM_P1R");
+    } else if(step == ControllerManager::P1C2_AIM_P1L) {
+        enumStr = env->NewStringUTF("P1C2_AIM_P1L");
         i = 12;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_DONE) {
-        enumStr = env->NewStringUTF("P1C2_DONE");
+    } else if(step == ControllerManager::P1C2_AIM_P1R) {
+        enumStr = env->NewStringUTF("P1C2_AIM_P1R");
         i = 13;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_OUT_OF_RANGE) {
-        enumStr = env->NewStringUTF("P1C2_OUT_OF_RANGE");
+    } else if(step == ControllerManager::P1C2_DONE) {
+        enumStr = env->NewStringUTF("P1C2_DONE");
         i = 14;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_IDLE) {
-        enumStr = env->NewStringUTF("P1C2_IDLE");
+    } else if(step == ControllerManager::P1C2_OUT_OF_RANGE) {
+        enumStr = env->NewStringUTF("P1C2_OUT_OF_RANGE");
         i = 15;
+    } else if(step == ControllerManager::P1C2_IDLE) {
+        enumStr = env->NewStringUTF("P1C2_IDLE");
+        i = 16;
     }
 	if(enumStr == NULL) return;
     jobject stepEnum = env->NewObject(enumClass, cid, enumStr, i);
@@ -84,21 +89,21 @@ JNIEXPORT void JNICALL Java_com_sixense_utils_ControllerManager_setGameType(JNIE
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "ONE_PLAYER_ONE_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::ONE_PLAYER_ONE_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::ONE_PLAYER_ONE_CONTROLLER);
     } else if(strcmp(valueNative, "ONE_PLAYER_TWO_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::ONE_PLAYER_TWO_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::ONE_PLAYER_TWO_CONTROLLER);
     } else if(strcmp(valueNative, "TWO_PLAYER_ONE_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::TWO_PLAYER_ONE_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::TWO_PLAYER_ONE_CONTROLLER);
     } else if(strcmp(valueNative, "TWO_PLAYER_TWO_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::TWO_PLAYER_TWO_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::TWO_PLAYER_TWO_CONTROLLER);
     } else if(strcmp(valueNative, "THREE_PLAYER_ONE_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::THREE_PLAYER_ONE_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::THREE_PLAYER_ONE_CONTROLLER);
     } else if(strcmp(valueNative, "THREE_PLAYER_TWO_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::THREE_PLAYER_TWO_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::THREE_PLAYER_TWO_CONTROLLER);
     } else if(strcmp(valueNative, "FOUR_PLAYER_ONE_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::FOUR_PLAYER_ONE_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::FOUR_PLAYER_ONE_CONTROLLER);
     } else if(strcmp(valueNative, "FOUR_PLAYER_TWO_CONTROLLER") == 0) {
-        sixenseUtils::getTheControllerManager()->setGameType(sixenseUtils::ControllerManager::FOUR_PLAYER_TWO_CONTROLLER);
+        sixenseUtils::getTheControllerManager()->setGameType(ControllerManager::FOUR_PLAYER_TWO_CONTROLLER);
     }
     return;
 }
@@ -108,31 +113,31 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_getGameType(J
     if(enumClass == NULL) return NULL;
     jmethodID cid = env->GetMethodID(enumClass, "<init>", "(Ljava/lang/String;I)V");
     if(cid == NULL) return NULL;
-    sixenseUtils::ControllerManager::game_type gt = sixenseUtils::getTheControllerManager()->getGameType();
+    ControllerManager::game_type gt = sixenseUtils::getTheControllerManager()->getGameType();
     jstring enumStr = NULL;
     jint i = -1;
-    if(gt == sixenseUtils::IControllerManager::ONE_PLAYER_ONE_CONTROLLER) {
+    if(gt == ControllerManager::ONE_PLAYER_ONE_CONTROLLER) {
         enumStr = env->NewStringUTF("ONE_PLAYER_ONE_CONTROLLER");
         i = 0;
-    } else if(gt == sixenseUtils::IControllerManager::ONE_PLAYER_TWO_CONTROLLER) {
+    } else if(gt == ControllerManager::ONE_PLAYER_TWO_CONTROLLER) {
         enumStr = env->NewStringUTF("ONE_PLAYER_TWO_CONTROLLER");
         i = 1;
-    } else if(gt == sixenseUtils::IControllerManager::TWO_PLAYER_ONE_CONTROLLER) {
+    } else if(gt == ControllerManager::TWO_PLAYER_ONE_CONTROLLER) {
         enumStr = env->NewStringUTF("TWO_PLAYER_ONE_CONTROLLER");
         i = 2;
-    } else if(gt == sixenseUtils::IControllerManager::TWO_PLAYER_TWO_CONTROLLER) {
+    } else if(gt == ControllerManager::TWO_PLAYER_TWO_CONTROLLER) {
         enumStr = env->NewStringUTF("TWO_PLAYER_TWO_CONTROLLER");
         i = 3;
-    } else if(gt == sixenseUtils::IControllerManager::THREE_PLAYER_ONE_CONTROLLER) {
+    } else if(gt == ControllerManager::THREE_PLAYER_ONE_CONTROLLER) {
         enumStr = env->NewStringUTF("THREE_PLAYER_ONE_CONTROLLER");
         i = 4;
-    } else if(gt == sixenseUtils::IControllerManager::THREE_PLAYER_TWO_CONTROLLER) {
+    } else if(gt == ControllerManager::THREE_PLAYER_TWO_CONTROLLER) {
         enumStr = env->NewStringUTF("THREE_PLAYER_TWO_CONTROLLER");
         i = 5;
-    } else if(gt == sixenseUtils::IControllerManager::FOUR_PLAYER_ONE_CONTROLLER) {
+    } else if(gt == ControllerManager::FOUR_PLAYER_ONE_CONTROLLER) {
         enumStr = env->NewStringUTF("FOUR_PLAYER_ONE_CONTROLLER");
         i = 6;
-    } else if(gt == sixenseUtils::IControllerManager::FOUR_PLAYER_TWO_CONTROLLER) {
+    } else if(gt == ControllerManager::FOUR_PLAYER_TWO_CONTROLLER) {
         enumStr = env->NewStringUTF("FOUR_PLAYER_TWO_CONTROLLER");
         i = 7;
     }
@@ -163,23 +168,23 @@ JNIEXPORT jint JNICALL Java_com_sixense_utils_ControllerManager_getIndex(JNIEnv 
     jstring value = (jstring) env->CallObjectMethod(enumObj, getNameMethod);
     const char* valueNative = env->GetStringUTFChars(value, JNI_FALSE);
     if(strcmp(valueNative, "P1L") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P1L);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P1L);
     } else if(strcmp(valueNative, "P1R") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P1R);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P1R);
     } else if(strcmp(valueNative, "P2L") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P2L);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P2L);
     } else if(strcmp(valueNative, "P2R") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P2R);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P2R);
     } else if(strcmp(valueNative, "P3L") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P3L);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P3L);
     } else if(strcmp(valueNative, "P3R") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P3R);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P3R);
     } else if(strcmp(valueNative, "P4L") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P4L);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P4L);
     } else if(strcmp(valueNative, "P4R") == 0) {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::P4R);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::P4R);
     } else {
-        return sixenseUtils::getTheControllerManager()->getIndex(sixenseUtils::ControllerManager::LAST_CONTROLLER_DESC);
+        return sixenseUtils::getTheControllerManager()->getIndex(ControllerManager::LAST_CONTROLLER_DESC);
     }
 }
 
@@ -216,13 +221,13 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_shouldPlaySou
     if(enumClass == NULL) return NULL;
     jmethodID cid = env->GetMethodID(enumClass, "<init>", "(Ljava/lang/String;I)V");
     if(cid == NULL) return NULL;
-    sixenseUtils::ControllerManager::sound_type st = sixenseUtils::getTheControllerManager()->shouldPlaySound();
+    ControllerManager::sound_type st = sixenseUtils::getTheControllerManager()->shouldPlaySound();
     jstring enumStr;
     jint i;
-    if(st == sixenseUtils::IControllerManager::NO_SOUND) {
+    if(st == ControllerManager::NO_SOUND) {
         enumStr = env->NewStringUTF("NO_SOUND");
         i = 0;
-    } else if(st == sixenseUtils::IControllerManager::SUCCESS_BEEP) {
+    } else if(st == ControllerManager::SUCCESS_BEEP) {
         enumStr = env->NewStringUTF("SUCCESS_BEEP");
         i = 1;
     } else {
@@ -241,57 +246,60 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_getCurrentSte
     if(enumClass == NULL) return NULL;
     jmethodID cid = env->GetMethodID(enumClass, "<init>", "(Ljava/lang/String;I)V");
     if(cid == NULL) return NULL;
-    sixenseUtils::ControllerManager::setup_step step = sixenseUtils::getTheControllerManager()->getCurrentStep();
+    ControllerManager::setup_step step = sixenseUtils::getTheControllerManager()->getCurrentStep();
     jstring enumStr = NULL;
     jint i = -1;
-    if(step == sixenseUtils::IControllerManager::SETUP_COMPLETE) {
+    if(step == ControllerManager::SETUP_COMPLETE) {
         enumStr = env->NewStringUTF("SETUP_COMPLETE");
         i = 0;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_0) {
-        enumStr = env->NewStringUTF("P1C1_POWER_UP_0");
+    } else if(step == ControllerManager::P1C1_START) {
+        enumStr = env->NewStringUTF("P1C1_START");
         i = 1;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_DONE) {
-        enumStr = env->NewStringUTF("P1C1_POWER_UP_DONE");
+    } else if(step == ControllerManager::P1C1_POWER_UP_0) {
+        enumStr = env->NewStringUTF("P1C1_POWER_UP_0");
         i = 2;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_AIM_P1L) {
-        enumStr = env->NewStringUTF("P1C1_AIM_P1L");
+    } else if(step == ControllerManager::P1C1_POWER_UP_DONE) {
+        enumStr = env->NewStringUTF("P1C1_POWER_UP_DONE");
         i = 3;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_DONE) {
-        enumStr = env->NewStringUTF("P1C1_DONE");
+    } else if(step == ControllerManager::P1C1_AIM_P1L) {
+        enumStr = env->NewStringUTF("P1C1_AIM_P1L");
         i = 4;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_OUT_OF_RANGE) {
-        enumStr = env->NewStringUTF("P1C1_OUT_OF_RANGE");
+    } else if(step == ControllerManager::P1C1_DONE) {
+        enumStr = env->NewStringUTF("P1C1_DONE");
         i = 5;
-    } else if(step == sixenseUtils::IControllerManager::P1C1_IDLE) {
-        enumStr = env->NewStringUTF("P1C1_IDLE");
+    } else if(step == ControllerManager::P1C1_OUT_OF_RANGE) {
+        enumStr = env->NewStringUTF("P1C1_OUT_OF_RANGE");
         i = 6;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_START) {
-        enumStr = env->NewStringUTF("P1C2_START");
+    } else if(step == ControllerManager::P1C1_IDLE) {
+        enumStr = env->NewStringUTF("P1C1_IDLE");
         i = 7;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_0) {
-        enumStr = env->NewStringUTF("P1C2_POWER_UP_0");
+    } else if(step == ControllerManager::P1C2_START) {
+        enumStr = env->NewStringUTF("P1C2_START");
         i = 8;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_1) {
-        enumStr = env->NewStringUTF("P1C2_POWER_UP_1");
+    } else if(step == ControllerManager::P1C2_POWER_UP_0) {
+        enumStr = env->NewStringUTF("P1C2_POWER_UP_0");
         i = 9;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_DONE) {
-        enumStr = env->NewStringUTF("P1C2_POWER_UP_DONE");
+    } else if(step == ControllerManager::P1C2_POWER_UP_1) {
+        enumStr = env->NewStringUTF("P1C2_POWER_UP_1");
         i = 10;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1L) {
-        enumStr = env->NewStringUTF("P1C2_AIM_P1L");
+    } else if(step == ControllerManager::P1C2_POWER_UP_DONE) {
+        enumStr = env->NewStringUTF("P1C2_POWER_UP_DONE");
         i = 11;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1R) {
-        enumStr = env->NewStringUTF("P1C2_AIM_P1R");
+    } else if(step == ControllerManager::P1C2_AIM_P1L) {
+        enumStr = env->NewStringUTF("P1C2_AIM_P1L");
         i = 12;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_DONE) {
-        enumStr = env->NewStringUTF("P1C2_DONE");
+    } else if(step == ControllerManager::P1C2_AIM_P1R) {
+        enumStr = env->NewStringUTF("P1C2_AIM_P1R");
         i = 13;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_OUT_OF_RANGE) {
-        enumStr = env->NewStringUTF("P1C2_OUT_OF_RANGE");
+    } else if(step == ControllerManager::P1C2_DONE) {
+        enumStr = env->NewStringUTF("P1C2_DONE");
         i = 14;
-    } else if(step == sixenseUtils::IControllerManager::P1C2_IDLE) {
-        enumStr = env->NewStringUTF("P1C2_IDLE");
+    } else if(step == ControllerManager::P1C2_OUT_OF_RANGE) {
+        enumStr = env->NewStringUTF("P1C2_OUT_OF_RANGE");
         i = 15;
+    } else if(step == ControllerManager::P1C2_IDLE) {
+        enumStr = env->NewStringUTF("P1C2_IDLE");
+        i = 16;
     }
 	if(enumStr == NULL) return NULL;
     jobject result = env->NewObject(enumClass, cid, enumStr, i);
