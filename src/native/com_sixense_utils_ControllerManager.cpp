@@ -23,51 +23,54 @@ void callback(sixenseUtils::ControllerManager::setup_step step) {
     if(step == sixenseUtils::IControllerManager::SETUP_COMPLETE) {
         enumStr = env->NewStringUTF("SETUP_COMPLETE");
         i = 0;
+    } else if(step == sixenseUtils::IControllerManager::P1C1_START) {
+        enumStr = env->NewStringUTF("P1C1_START");
+        i = 1;
     } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_0) {
         enumStr = env->NewStringUTF("P1C1_POWER_UP_0");
-        i = 1;
+        i = 2;
     } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_DONE) {
         enumStr = env->NewStringUTF("P1C1_POWER_UP_DONE");
-        i = 2;
+        i = 3;
     } else if(step == sixenseUtils::IControllerManager::P1C1_AIM_P1L) {
         enumStr = env->NewStringUTF("P1C1_AIM_P1L");
-        i = 3;
+        i = 4;
     } else if(step == sixenseUtils::IControllerManager::P1C1_DONE) {
         enumStr = env->NewStringUTF("P1C1_DONE");
-        i = 4;
+        i = 5;
     } else if(step == sixenseUtils::IControllerManager::P1C1_OUT_OF_RANGE) {
         enumStr = env->NewStringUTF("P1C1_OUT_OF_RANGE");
-        i = 5;
+        i = 6;
     } else if(step == sixenseUtils::IControllerManager::P1C1_IDLE) {
         enumStr = env->NewStringUTF("P1C1_IDLE");
-        i = 6;
+        i = 7;
     } else if(step == sixenseUtils::IControllerManager::P1C2_START) {
         enumStr = env->NewStringUTF("P1C2_START");
-        i = 7;
+        i = 8;
     } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_0) {
         enumStr = env->NewStringUTF("P1C2_POWER_UP_0");
-        i = 8;
+        i = 9;
     } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_1) {
         enumStr = env->NewStringUTF("P1C2_POWER_UP_1");
-        i = 9;
+        i = 10;
     } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_DONE) {
         enumStr = env->NewStringUTF("P1C2_POWER_UP_DONE");
-        i = 10;
+        i = 11;
     } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1L) {
         enumStr = env->NewStringUTF("P1C2_AIM_P1L");
-        i = 11;
+        i = 12;
     } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1R) {
         enumStr = env->NewStringUTF("P1C2_AIM_P1R");
-        i = 12;
+        i = 13;
     } else if(step == sixenseUtils::IControllerManager::P1C2_DONE) {
         enumStr = env->NewStringUTF("P1C2_DONE");
-        i = 13;
+        i = 14;
     } else if(step == sixenseUtils::IControllerManager::P1C2_OUT_OF_RANGE) {
         enumStr = env->NewStringUTF("P1C2_OUT_OF_RANGE");
-        i = 14;
+        i = 15;
     } else if(step == sixenseUtils::IControllerManager::P1C2_IDLE) {
         enumStr = env->NewStringUTF("P1C2_IDLE");
-        i = 15;
+        i = 16;
     }
 	if(enumStr == NULL) return;
     jobject stepEnum = env->NewObject(enumClass, cid, enumStr, i);
@@ -247,51 +250,54 @@ JNIEXPORT jobject JNICALL Java_com_sixense_utils_ControllerManager_getCurrentSte
     if(step == sixenseUtils::IControllerManager::SETUP_COMPLETE) {
         enumStr = env->NewStringUTF("SETUP_COMPLETE");
         i = 0;
+    } else if(step == sixenseUtils::IControllerManager::P1C1_START) {
+        enumStr = env->NewStringUTF("P1C1_START");
+        i = 1;
     } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_0) {
         enumStr = env->NewStringUTF("P1C1_POWER_UP_0");
-        i = 1;
+        i = 2;
     } else if(step == sixenseUtils::IControllerManager::P1C1_POWER_UP_DONE) {
         enumStr = env->NewStringUTF("P1C1_POWER_UP_DONE");
-        i = 2;
+        i = 3;
     } else if(step == sixenseUtils::IControllerManager::P1C1_AIM_P1L) {
         enumStr = env->NewStringUTF("P1C1_AIM_P1L");
-        i = 3;
+        i = 4;
     } else if(step == sixenseUtils::IControllerManager::P1C1_DONE) {
         enumStr = env->NewStringUTF("P1C1_DONE");
-        i = 4;
+        i = 5;
     } else if(step == sixenseUtils::IControllerManager::P1C1_OUT_OF_RANGE) {
         enumStr = env->NewStringUTF("P1C1_OUT_OF_RANGE");
-        i = 5;
+        i = 6;
     } else if(step == sixenseUtils::IControllerManager::P1C1_IDLE) {
         enumStr = env->NewStringUTF("P1C1_IDLE");
-        i = 6;
+        i = 7;
     } else if(step == sixenseUtils::IControllerManager::P1C2_START) {
         enumStr = env->NewStringUTF("P1C2_START");
-        i = 7;
+        i = 8;
     } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_0) {
         enumStr = env->NewStringUTF("P1C2_POWER_UP_0");
-        i = 8;
+        i = 9;
     } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_1) {
         enumStr = env->NewStringUTF("P1C2_POWER_UP_1");
-        i = 9;
+        i = 10;
     } else if(step == sixenseUtils::IControllerManager::P1C2_POWER_UP_DONE) {
         enumStr = env->NewStringUTF("P1C2_POWER_UP_DONE");
-        i = 10;
+        i = 11;
     } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1L) {
         enumStr = env->NewStringUTF("P1C2_AIM_P1L");
-        i = 11;
+        i = 12;
     } else if(step == sixenseUtils::IControllerManager::P1C2_AIM_P1R) {
         enumStr = env->NewStringUTF("P1C2_AIM_P1R");
-        i = 12;
+        i = 13;
     } else if(step == sixenseUtils::IControllerManager::P1C2_DONE) {
         enumStr = env->NewStringUTF("P1C2_DONE");
-        i = 13;
+        i = 14;
     } else if(step == sixenseUtils::IControllerManager::P1C2_OUT_OF_RANGE) {
         enumStr = env->NewStringUTF("P1C2_OUT_OF_RANGE");
-        i = 14;
+        i = 15;
     } else if(step == sixenseUtils::IControllerManager::P1C2_IDLE) {
         enumStr = env->NewStringUTF("P1C2_IDLE");
-        i = 15;
+        i = 16;
     }
 	if(enumStr == NULL) return NULL;
     jobject result = env->NewObject(enumClass, cid, enumStr, i);
