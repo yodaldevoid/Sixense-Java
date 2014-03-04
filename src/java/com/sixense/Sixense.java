@@ -23,7 +23,7 @@ package com.sixense;
 public class Sixense {
     static {
 
-        if("x86".equals(System.getProperty("os.arch"))) {
+        if("x86".equals(System.getProperty("os.arch")) || "i386".equals(System.getProperty("os.arch"))) {
             System.loadLibrary("sixense");
             System.out.println("sixense loaded");
             System.loadLibrary("sixense_utils");
